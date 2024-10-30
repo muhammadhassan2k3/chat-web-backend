@@ -1,7 +1,9 @@
-import express from 'express'
-import cors from 'cors'
-import dotenv from 'dotenv'
-import connectDB from './config/connectDB.js'
+const express = require('express');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const connectDB = require('./config/connectDB.js');
+const userRoutes = require('./routes/userRoutes.js');
+
 dotenv.config()
 
 const app = express()
@@ -10,7 +12,7 @@ app.use(cors({
     credentials: true,
 }))
 
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 5002
 
 app.get('/', (request, response) => {
     response.json({
@@ -18,6 +20,8 @@ app.get('/', (request, response) => {
 
     })
 }) 
+
+app.use('/api/user', userRoutes)
 
 connectDB().then(() => {
     app.listen(PORT, () => {
